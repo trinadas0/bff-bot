@@ -1,6 +1,6 @@
-# bffBOT 💖
+# bffbot 💖
 
-bffBOT is a friendly chatbot powered by the **Google Gemini API** and built using **Flask** for the backend and **HTML/CSS** for the frontend. The bot simulates a casual conversation between best friends, giving responses in a fun, friendly way.
+bffbot is a friendly chatbot powered by the **Google Gemini API** and built using **Flask** for the backend and **HTML/CSS** for the frontend. The bot simulates a casual conversation between best friends, giving responses in a fun, friendly way.
 
 You can view the bot here: https://bff-bot.vercel.app/
 
