@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+
+<h1 class="header">bffbot <3</h1>
+
+<div class="container chat-container">
+    <div class="chat-box" id="chat-box">
+        <!-- chat messages appear here -->
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="user-input" placeholder="Type a message...">
+        <div class="input-group-append">
+            <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function sendMessage() {
+        const userInput = document.getElementById("user-input").value;
+        if (userInput === "") return;
+
+        const chatBox = document.getElementById("chat-box");
+        
+        const userMessage = document.createElement("div");
+        userMessage.className = "user-message";
+        userMessage.textContent = userInput;
+        chatBox.appendChild(userMessage);
+
+        const loadingIndicator = document.createElement("div");
+        loadingIndicator.className = "bot-message";
+        loadingIndicator.textContent = "bffbot is typing...";
+        chatBox.appendChild(loadingIndicator);
+
+        fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: userInput })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data received:", data);  // Debugging
+
+            chatBox.removeChild(loadingIndicator);
+
+            const botMessage = document.createElement("div");
+            botMessage.className = "bot-message";
+            botMessage.textContent = data.response.trim();  
+            chatBox.appendChild(botMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+
+        document.getElementById("user-input").value = "";
+    }
+</script>
+</body>
+</html>
